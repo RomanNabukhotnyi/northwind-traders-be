@@ -1,0 +1,5 @@
+{
+  "dialect": "mysql",
+  "out": "./drizzle",
+  "schema": "./src/db/schema.ts"
+}
