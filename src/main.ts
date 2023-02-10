@@ -7,6 +7,7 @@ import { App } from './express/App';
 import { SupplierRepository } from './db/repositories/SupplierRepository';
 import { ProductRepository } from './db/repositories/ProductRepository';
 import { OrderRepository } from './db/repositories/OrderRepository';
+import { OrderDetailsRepository } from './db/repositories/OrderDetailsRepository';
 import { EmployeeRepository } from './db/repositories/EmployeeRepository';
 import { CustomerRepository } from './db/repositories/CustomerRepository';
 
@@ -39,12 +40,13 @@ async function main() {
     const supplierRepository = new SupplierRepository(db);
     const productRepository = new ProductRepository(db);
     const orderRepository = new OrderRepository(db);
+    const orderDetailsRepository = new OrderDetailsRepository(db);
     const employeeRepository = new EmployeeRepository(db);
     const customerRepository = new CustomerRepository(db);
 
     const supplierService = new SupplierService(supplierRepository);
     const productService = new ProductService(productRepository);
-    const orderService = new OrderService(orderRepository);
+    const orderService = new OrderService(orderRepository, orderDetailsRepository, productRepository);
     const employeeService = new EmployeeService(employeeRepository);
     const customerService = new CustomerService(customerRepository);
 

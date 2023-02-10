@@ -170,3 +170,4 @@ export type Product = InferModel<typeof products>;
 export type Order = InferModel<typeof orders>;
 export type Employee = InferModel<typeof employees>;
 export type Customer = InferModel<typeof customers>;
+export type OrderDetails = InferModel<typeof orderDetails>;
