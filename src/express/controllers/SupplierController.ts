@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import { okResponse } from "../api/BaseResponses";
 import { SupplierService } from "../services/SupplierService";
-import { apiCreateSupplierSchema } from "../dtos/suppliers/requests/ApiCreateSupplier";
+import { apiCreateSupplierSchema } from "../dtos/suppliers/ApiCreateSupplier";
 import { idSchema } from "../dtos/common/idSchema";
 
 export class SupplierController extends Controller {
@@ -14,6 +14,7 @@ export class SupplierController extends Controller {
     private initializeRoutes() {
         this.router.get('/', this.getAll);
         this.router.post('/', this.create);
+        this.router.put('/:id', this.update);
         this.router.delete('/:id', this.delete);
     }
 
@@ -26,6 +27,14 @@ export class SupplierController extends Controller {
         const { body: reqBody } = request;
         const body = await apiCreateSupplierSchema.parseAsync(reqBody);
         const supplier = await this.supplierService.create(body);
+        return response.status(200).json(okResponse(supplier));
+    }
+
+    private update = async (request: Request, response: Response) => {
+        const { params, body: reqBody } = request;
+        const body = await apiCreateSupplierSchema.parseAsync(reqBody);
+        const supplierId = await idSchema.parseAsync(params.id);
+        const supplier = await this.supplierService.update(supplierId, body);
         return response.status(200).json(okResponse(supplier));
     }
 

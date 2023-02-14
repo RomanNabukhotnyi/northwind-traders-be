@@ -10,18 +10,21 @@ import { OrderRepository } from './db/repositories/OrderRepository';
 import { OrderDetailsRepository } from './db/repositories/OrderDetailsRepository';
 import { EmployeeRepository } from './db/repositories/EmployeeRepository';
 import { CustomerRepository } from './db/repositories/CustomerRepository';
+import { CategoryRepository } from './db/repositories/CategoryRepository';
 
 import { SupplierService } from './express/services/SupplierService';
 import { ProductService } from './express/services/ProductService';
 import { OrderService } from './express/services/OrderService';
 import { EmployeeService } from './express/services/EmployeeService';
 import { CustomerService } from './express/services/CustomerService';
+import { CategoryService } from './express/services/CategoryService';
 
 import { SupplierController } from './express/controllers/SupplierController';
 import { ProductController } from './express/controllers/ProductController';
 import { OrderController } from './express/controllers/OrderController';
 import { EmployeeController } from './express/controllers/EmployeeController';
 import { CustomerController } from './express/controllers/CustomerController';
+import { CategoryController } from './express/controllers/CategoryController';
 
 async function main() {
   try {
@@ -43,18 +46,21 @@ async function main() {
     const orderDetailsRepository = new OrderDetailsRepository(db);
     const employeeRepository = new EmployeeRepository(db);
     const customerRepository = new CustomerRepository(db);
+    const categoryRepository = new CategoryRepository(db);
 
     const supplierService = new SupplierService(supplierRepository);
     const productService = new ProductService(productRepository);
     const orderService = new OrderService(orderRepository, orderDetailsRepository, productRepository);
     const employeeService = new EmployeeService(employeeRepository);
     const customerService = new CustomerService(customerRepository);
+    const categoryService = new CategoryService(categoryRepository);
 
     const supplierController = new SupplierController(supplierService);
     const productController = new ProductController(productService);
     const orderController = new OrderController(orderService);
     const employeeController = new EmployeeController(employeeService);
     const customerController = new CustomerController(customerService);
+    const categoryController = new CategoryController(categoryService);
 
     const port = process.env.PORT || 4000;
 
@@ -64,6 +70,7 @@ async function main() {
       orderController,
       employeeController,
       customerController,
+      categoryController,
     ]);
 
     expressApp.listen();
