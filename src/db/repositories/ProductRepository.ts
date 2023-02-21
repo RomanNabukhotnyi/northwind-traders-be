@@ -1,6 +1,8 @@
 import { MySql2Database } from 'drizzle-orm/mysql2';
 import { eq } from 'drizzle-orm/expressions';
 import { products, Product, suppliers } from '../schema';
+import { sql } from 'drizzle-orm';
+import { ApiTotalProductsSold } from '../../express/dtos/products/ApiTotalProductsSold';
 
 export class ProductRepository {
     constructor(private db: MySql2Database) {}
@@ -41,6 +43,12 @@ export class ProductRepository {
             supplierName: suppliers.contactName,
         }).leftJoin(suppliers, eq(products.supplierId, suppliers.id));
         return result;
+    };
+
+    public getTotalProductsSold = async (): Promise<ApiTotalProductsSold[]> => {
+        const result = await this.db.execute<ApiTotalProductsSold[]>(sql`CALL totalProductsSold();`);
+        const data = (result as any)[0][0];
+        return data as unknown as ApiTotalProductsSold[];
     };
 
     public getById = async (id: number): Promise<Product> => {

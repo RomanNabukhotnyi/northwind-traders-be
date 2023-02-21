@@ -1,6 +1,7 @@
 import { Product } from '../../db/schema';
 import { ProductRepository } from '../../db/repositories/ProductRepository';
 import { ApiCreateProduct } from '../dtos/products/ApiCreateProduct';
+import { ApiTotalProductsSold } from '../dtos/products/ApiTotalProductsSold';
 
 export class ProductService {
     constructor(private productRepository: ProductRepository) {}
@@ -22,6 +23,11 @@ export class ProductService {
 
     public getAll = async (): Promise<Product[]> => {
         const result = await this.productRepository.getAll();
+        return result;
+    };
+
+    public getTotalProductsSold = async (): Promise<ApiTotalProductsSold[]> => {
+        const result = await this.productRepository.getTotalProductsSold();
         return result;
     };
 

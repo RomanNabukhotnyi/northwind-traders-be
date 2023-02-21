@@ -16,6 +16,7 @@ export class ProductController extends Controller {
         this.router.get('/', this.getAll);
         this.router.put('/:id', this.update);
         this.router.delete('/:id', this.delete);
+        this.router.get('/statistic', this.getTotalProductsSold);
     }
 
     private create = async (request: Request, response: Response) => {
@@ -28,6 +29,11 @@ export class ProductController extends Controller {
     private getAll = async (request: Request, response: Response) => {
         const products = await this.productService.getAll();
         return response.status(200).json(okResponse(products));
+    }
+
+    private getTotalProductsSold = async (request: Request, response: Response) => {
+        const totalProductsSold = await this.productService.getTotalProductsSold();
+        return response.status(200).json(okResponse(totalProductsSold));
     }
 
     private update = async (request: Request, response: Response) => {

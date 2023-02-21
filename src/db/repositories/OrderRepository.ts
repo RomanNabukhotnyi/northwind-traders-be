@@ -1,6 +1,6 @@
 import { MySql2Database } from 'drizzle-orm/mysql2';
 import { eq } from 'drizzle-orm/expressions';
-import { orders, Order, orderDetails, products } from '../schema';
+import { orders, Order, orderDetails } from '../schema';
 import { sql } from 'drizzle-orm';
 
 export class OrderRepository {
